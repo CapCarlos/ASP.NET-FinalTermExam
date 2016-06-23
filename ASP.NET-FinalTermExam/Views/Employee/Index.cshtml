@@ -1,0 +1,119 @@
+﻿
+@*@Model ASP.NET_FinalTermExam.Models.EmployeeSearchArg*@
+
+
+@model ASP.NET_FinalTermExam.Models.Employee
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>四資三甲 1102137147 戴廷瑜</title>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+    <h2>四資三甲 1102137147 戴廷瑜</h2>
+
+    <div id="SearchConditionSection">
+        <h3>員工查詢</h3>
+        @using (Html.BeginForm("Index", "Employee", FormMethod.Post, new { id = "Form1" }))
+        {
+            <table>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.EmployeeId)
+                    </td>
+                    <td colspan="3">
+
+                        @Html.TextBoxFor(model => model.EmployeeId)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.EmployeeName)
+                    </td>
+                    <td colspan="3">
+
+                        @Html.TextBoxFor(model => model.EmployeeName)
+                    </td>
+                </tr>
+
+               
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Job)
+                    </td>
+                    <td colspan="3">
+                        @Html.DropDownListFor(model => model.Job, (List<SelectListItem>)ViewBag.SCodeData)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Employeedate)
+                    </td>
+                    <td>
+
+                        @Html.TextBoxFor(model => model.Employeedate, new { @type = "date" })
+                    </td>
+                   
+                </tr>
+              
+                    <td></td>
+                    <td colspan="3">
+                        <input type="submit" class="btn btn-default" value="查詢"><input type="reset" class="btn btn-default" value="清除"><input type="button" value="新增訂單" class="btn btn-default" onclick="location.href = '/Employee/InsertEmployee'" />
+
+                    </td>
+                </tr>
+
+
+            </table>
+        }
+    </div>
+
+
+    <div id="SearchResultSection">
+
+        @if (ViewBag.SearchResult != null)
+        {
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <td>員工編號</td>
+                    <td>員工姓名</td>
+                    <td>職稱</td>
+                    <td>任職日期</td>
+                    
+                    <td></td>
+                </tr>
+                @foreach (var item in (List<ASP.NET_FinalTermExam.Models.Employee>)ViewBag.SearchResult)
+                {
+                    <tr id='@item.EmployeeId'>
+                        <td>@item.EmployeeId</td>
+                        <td>@item.EmployeeName</td>
+                        <td>@item.Job</td>                       
+                        <td>@item.Employeedate</td>
+                        <td>
+                            @Html.ActionLink("修改", "Update", new { id = item.EmployeeId })
+                        <a class="btnDelete" href="#">刪除</a>
+                        <input class="hidOrderId" type="hidden" value='@item.EmployeeId' />
+                    </td>
+                </tr>
+                }
+
+            </table>
+
+        }
+
+    </div>
+
+   
+
+
+</body>
+</html>
+
+
+
